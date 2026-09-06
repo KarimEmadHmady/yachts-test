@@ -1,0 +1,218 @@
+// redux/features/auth/authSlice.js
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { authService } from '@/features/auth/api/authService';
+
+// ============ Cookie Helpers ============
+// لازم نخزن التوكن في cookie كمان (مش بس localStorage)
+// عشان الـ middleware (اللي شغال على السيرفر) يقدر يشوفه ويتحقق من الـ auth
+
+const setCookie = (name, value, days = 7) => {
+  if (typeof window !== 'undefined') {
+    const expires = new Date(Date.now() + days * 864e5).toUTCString();
+    document.cookie = `${name}=${value}; expires=${expires}; path=/; SameSite=Lax`;
+  }
+};
+
+const removeCookie = (name) => {
+  if (typeof window !== 'undefined') {
+    document.cookie = `${name}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+  }
+};
+
+// Async thunk للـ login
+export const loginUser = createAsyncThunk(
+  'auth/login',
+  async ({ email, password }, { rejectWithValue }) => {
+    try {
+      const data = await authService.login(email, password);
+      return data;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk للـ logout
+export const logoutUser = createAsyncThunk(
+  'auth/logout',
+  async (_, { rejectWithValue }) => {
+    try {
+      await authService.logout();
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk للـ forgot password
+export const forgotPassword = createAsyncThunk(
+  'auth/forgotPassword',
+  async (email, { rejectWithValue }) => {
+    try {
+      const response = await authService.forgotPassword(email);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// Async thunk للـ reset password
+export const resetPassword = createAsyncThunk(
+  'auth/resetPassword',
+  async ({ token, newPassword, email }, { rejectWithValue }) => {
+    try {
+      const response = await authService.resetPassword(token, newPassword, email);
+      return response;
+    } catch (error) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+// ملحوظة مهمة: الـ initialState لازم يبقى ثابت ومطابق دايمًا لما بيرجعه السيرفر
+// (يعني "مش مسجل دخول")، عشان أول render على الكلاينت يطابق الـ HTML اللي جه
+// من السيرفر ولا يحصل hydration mismatch.
+// قراءة localStorage الفعلية بتتم بعد الـ mount عن طريق hydrateAuthFromStorage
+// (شوف authHydrate.js) مش هنا وقت إنشاء الـ store.
+const initialState = {
+  user: null,
+  token: null,
+  isAuthenticated: false,
+  isLoading: false,
+  error: null,
+  resetEmailSent: false,
+  passwordResetSuccess: false,
+};
+
+const authSlice = createSlice({
+  name: 'auth',
+  initialState,
+  reducers: {
+    // للـ logout العادي
+    logout: (state) => {
+      state.user = null;
+      state.token = null;
+      state.isAuthenticated = false;
+      state.resetEmailSent = false;
+      state.passwordResetSuccess = false;
+      if (typeof window !== 'undefined') {
+        localStorage.removeItem('auth_token');
+        localStorage.removeItem('auth_user');
+        removeCookie('auth_token');
+      }
+      authService.logout();
+    },
+    // لتحديث الـ user من localStorage (بعد الـ mount) أو بعد أي عملية تسجيل دخول يدوية
+    setCredentials: (state, action) => {
+      state.user = action.payload.user;
+      state.token = action.payload.token;
+      state.isAuthenticated = true;
+      if (typeof window !== 'undefined' && action.payload.token) {
+        setCookie('auth_token', action.payload.token);
+      }
+    },
+    clearError: (state) => {
+      state.error = null;
+    },
+    // لمسح حالات Reset Password
+    clearResetState: (state) => {
+      state.resetEmailSent = false;
+      state.passwordResetSuccess = false;
+      state.error = null;
+    },
+    // لتحديث بيانات المستخدم بعد التعديل
+    updateUserProfile: (state, action) => {
+      state.user = { ...state.user, ...action.payload };
+      // Update localStorage as well
+      if (typeof window !== 'undefined') {
+        localStorage.setItem('auth_user', JSON.stringify(state.user));
+      }
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      // Login Cases
+      .addCase(loginUser.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+      })
+      .addCase(loginUser.fulfilled, (state, action) => {
+        state.isLoading = false;
+        state.isAuthenticated = true;
+        state.user = action.payload.user || action.payload;
+        state.token = action.payload.token;
+        state.error = null;
+
+        // Save to localStorage for persistence
+        if (typeof window !== 'undefined') {
+          localStorage.setItem('auth_token', action.payload.token);
+          localStorage.setItem('auth_user', JSON.stringify(state.user));
+          // Save to cookie too, so the middleware (server-side) can read it
+          setCookie('auth_token', action.payload.token);
+        }
+      })
+      .addCase(loginUser.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+      })
+
+      // Logout Cases
+      .addCase(logoutUser.fulfilled, (state) => {
+        state.user = null;
+        state.token = null;
+        state.isAuthenticated = false;
+        state.resetEmailSent = false;
+        state.passwordResetSuccess = false;
+        if (typeof window !== 'undefined') {
+          localStorage.removeItem('auth_token');
+          localStorage.removeItem('auth_user');
+          removeCookie('auth_token');
+        }
+      })
+
+      // Forgot Password Cases
+      .addCase(forgotPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.resetEmailSent = false;
+      })
+      .addCase(forgotPassword.fulfilled, (state) => {
+        state.isLoading = false;
+        state.resetEmailSent = true;
+        state.error = null;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.resetEmailSent = false;
+      })
+
+      // Reset Password Cases
+      .addCase(resetPassword.pending, (state) => {
+        state.isLoading = true;
+        state.error = null;
+        state.passwordResetSuccess = false;
+      })
+      .addCase(resetPassword.fulfilled, (state) => {
+        state.isLoading = false;
+        state.passwordResetSuccess = true;
+        state.error = null;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.isLoading = false;
+        state.error = action.payload;
+        state.passwordResetSuccess = false;
+      });
+  },
+});
+
+export const {
+  logout,
+  setCredentials,
+  clearError,
+  clearResetState,
+  updateUserProfile,
+} = authSlice.actions;
+
+export default authSlice.reducer;

@@ -1,0 +1,81 @@
+{
+  "Home": {
+    "title": "مرحبًا بك في متجرنا!",
+    "welcome": "سعداء بوجودك معنا. استمتع بتصفح منتجاتنا!"
+  },
+  "InvestmentFunds": {
+    "title": "صناديق الاستثمار",
+    "lastUpdate": "آخر تحديث",
+    "recent": "حديث",
+    "price": "السعر",
+    "seeMore": "عرض المزيد",
+    "fund": "صندوق",
+    "unnamedFund": "صندوق غير مسمى",
+    "investmentFund": "صندوق استثمار",
+    "errorLoadingFunds": "خطأ في تحميل الصناديق"
+  },
+  "fundDetails": {
+    "overview": "نظرة عامة",
+    "details": "تفاصيل الصندوق",
+    "type": "نوع الصندوق",
+    "category": "فئة الصندوق",
+    "nav": "السعر الحالي للوثيقة",
+    "initialRelease": " الإصدار الأول",
+    "currency": "عملة الصندوق",
+    "redemptionFrequency": "الشراء",
+    "subscriptionFrequency": "الاسترداد",
+    "minInitial": "الحد الأدني للشراء",
+    "minRedemption": "الحد الأدنى للاسترداد",
+    "subscriptionFee": "عمولة الشراء",
+    "redemptionFee": "عمولة الاسترداد",
+    "annualFee": "الرسوم السنوية",
+    "fundManager": "مدير الصندوق",
+    "latestPrice": "السعر الحالي للوثيقة",
+    "latestPriceDate": "تاريخ أحدث سعر"
+  },
+  "Navigation": {
+    "home": "الرئيسية",
+    "about": "من نحن",
+    "aboutPage": "صفحة من نحن",
+    "services": "الخدمات",
+    "servicesPage": "صفحة الخدمات",
+    "fundsManagement": "إدارة الصناديق",
+    "portfolioManagement": "إدارة المحافظ",
+    "cashManagement": "إدارة النقد",
+    "privatePension": "صناديق التقاعد الخاصة",
+    "familyBusiness": "إدارة محافظ الأعمال العائلية",
+    "blogs": "المدونات",
+    "careers": "الوظائف",
+    "contact": "اتصل بنا",
+    "address": {
+      "full": "القرية الذكية، مبناء مركز الأعمال الزمرداين رقم 2210 ب، الجيزة، مصر",
+      "short": "القرية الذكية، الجيزة، مصر"
+    },
+    "phone1": "01234567890",
+    "phone2": "01098765432",
+    "holdingCompany": "الشركة القابضة",
+    "committees": "اللجان"
+  },
+  "fundSidebar": {
+    "details": "تفاصيل الصندوق",
+    "performance": "الأداء",
+    "manager": "مدير الصندوق",
+    "files": "الملفات",
+    "fund_link": "رابط الصندوق",
+    "lastUpdate": "آخر تحديث",
+    "price": "السعر"
+  },
+  "performance": {
+    "title": "الأداء",
+    "currentBalance": "الرصيد الحالي"
+  },
+  "entities": {
+    "title": "الكيانات المرتبطة",
+    "visitWebsite": "زيارة الموقع",
+    "addedOn": "أضيف في",
+    "noEntities": "لا توجد كيانات متاحة"
+  },
+  "TrustedBySection": {
+    "trustedBy": "موثوق من قبل 15,000 مؤسس وأصحاب الأعمال"
+  }
+} 
