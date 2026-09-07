@@ -69,16 +69,21 @@ export default async function Footer() {
 
   return (
     <footer className="relative bg-[#f7f7f7] text-black dark:bg-[#0E2D4A] dark:text-white rounded-t-[30px] overflow-hidden transition-colors duration-300">
-      {/* Decorative pattern watermark */}
+      {/* Decorative watermark */}
       <Image
         src="/pattern.png"
         alt=""
         width={256}
         height={256}
-        className="pointer-events-none select-none absolute -right-4 bottom-0 z-0 w-64 h-64 object-contain brightness-0  dark:brightness-100 "
+        className="pointer-events-none select-none absolute -right-4 bottom-0 z-0 w-64 h-64 object-contain brightness-0  dark:hidden"
       />
-
-      
+      <Image
+        src="/pattern.png"
+        alt=""
+        width={256}
+        height={256}
+        className="pointer-events-none select-none absolute -right-4 bottom-0 z-0 w-64 h-64 object-contain dark:brightness-100  hidden dark:block"
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto px-6 py-12">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-10 mb-8">
@@ -86,10 +91,18 @@ export default async function Footer() {
           <div className="md:col-span-1 flex flex-col items-start">
             <div className="mb-4">
               <Image
+                src="/logo-black.png"
+                alt="Blue Horizon Marine Concepts"
+                width={140}
+                height={45}
+                className="block dark:hidden"
+              />
+              <Image
                 src="/logo.png"
                 alt="Blue Horizon Marine Concepts"
                 width={140}
                 height={45}
+                className="hidden dark:block"
               />
             </div>
             <p className="text-sm text-gray-700 dark:text-gray-300 max-w-xs leading-relaxed">

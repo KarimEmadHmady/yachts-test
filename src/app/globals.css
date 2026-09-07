@@ -112,14 +112,66 @@ body {
   will-change: transform, opacity;
 }
 
+@keyframes navbarSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes navLinkSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-16px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes mobileLinkSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateX(-24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.animate-navbar-down {
+  animation: navbarSlideDown 0.75s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+.animate-nav-link-down {
+  animation: navLinkSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
+.animate-mobile-link-in {
+  animation: mobileLinkSlideIn 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+  will-change: transform, opacity;
+}
+
 @media (prefers-reduced-motion: reduce) {
   .hero-slide-up,
   .hero-card-entrance,
   .hero-zoom-out,
-  .yacht-slide-in {
+  .yacht-slide-in,
+  .animate-navbar-down,
+  .animate-nav-link-down,
+  .animate-mobile-link-in {
     animation: none !important;
     opacity: 1 !important;
     transform: none !important;
   }
 }
+
 
