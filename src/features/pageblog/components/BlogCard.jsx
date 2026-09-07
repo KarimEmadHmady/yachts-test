@@ -2,12 +2,18 @@
 
 import { ArrowUpRight, CalendarDays } from 'lucide-react';
 import { formatBlogDate, getBlogCoverImage, getBlogImageUrl } from '../utils/blog.utils';
+import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
-export function BlogCard({ blog, onClick }) {
+export function BlogCard({ blog, onClick, index = 0 }) {
   const coverImage = getBlogCoverImage(blog);
 
   return (
-    <article
+    <ScrollAnimate
+      as="article"
+      direction="up"
+      delay={(index % 3) * 120}
+      distance={30}
+      duration={800}
       onClick={onClick}
       className="group cursor-pointer overflow-hidden rounded-2xl border border-[#C9A868]/70 bg-[#0E2D4A] transition-colors duration-200 hover:border-[#C9A868]"
     >
@@ -37,6 +43,6 @@ export function BlogCard({ blog, onClick }) {
         </h2>
         <p className="line-clamp-2 text-sm leading-relaxed text-white/60">{blog.description}</p>
       </div>
-    </article>
+    </ScrollAnimate>
   );
 }

@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
 import { leadService } from "@/services/leadService";
+import { ScrollAnimate } from "@/components/common/ScrollAnimate";
 
 export default function ContactCta() {
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
@@ -34,10 +35,15 @@ export default function ContactCta() {
   };
 
   return (
-    <section className="relative bg-[#ffff] dark:bg-[#012241] transition-colors duration-300">
+    <section className="relative bg-white dark:bg-[#012241] transition-colors duration-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <div className="relative rounded-[24px] border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] px-6 py-8 sm:px-10 sm:py-10">
-          <h2 className="font-serif font-bold text-lg sm:text-2xl text-black dark:text-white dark:text-whitemb-3 max-w-2xl leading-snug">
+        <ScrollAnimate
+          direction="up"
+          delay={100}
+          duration={850}
+          className="relative rounded-[24px] border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] px-6 py-8 sm:px-10 sm:py-10"
+        >
+          <h2 className="font-serif font-bold text-lg sm:text-2xl text-black dark:text-white mb-3 max-w-2xl leading-snug">
             We&apos;re Here To Help You Set Sail On Your Perfect Journey
           </h2>
           <p className="text-sm text-black dark:text-white/70 leading-relaxed max-w-2xl mb-8">
@@ -97,7 +103,7 @@ export default function ContactCta() {
               Privacy Policy
             </Link>
           </p>
-        </div>
+        </ScrollAnimate>
       </div>
 
       {status === "sent" && (

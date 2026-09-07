@@ -3,6 +3,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { Yacht } from '../types/Yacht.types';
 import { getYachtImageUrl, groupSpecifications } from '../utils/yacht.utils';
+import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 interface YachtSpecificationsSectionProps {
   yacht: Yacht;
@@ -75,10 +76,10 @@ export function YachtSpecificationsSection({
   }
 
   return (
-    <section className="bg-[#f7f7f7] px-6 py-8 text-black dark:bg-[#0E2D4A] dark:text-white md:px-12 md:py-10">
+    <section className="bg-[#f7f7f7] px-6 py-8 text-black dark:bg-[#0E2D4A] dark:text-white md:px-12 md:py-10 overflow-hidden">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[1.7fr_1fr]">
         {/* Specs & Characteristics */}
-        <div className="space-y-10">
+        <ScrollAnimate direction="up" delay={100} duration={850} className="space-y-10">
           {specification.length > 0 && (
             <div>
               <h2 className="mb-2 text-lg font-bold uppercase tracking-wide text-[#C9A868]">
@@ -117,16 +118,21 @@ export function YachtSpecificationsSection({
               <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
             </button>
           )}
-        </div>
+        </ScrollAnimate>
 
         {/* Interior photos */}
         {interiorImages.length > 0 && (
-          <div className="rounded-2xl border border-black/10 bg-white/40 p-5 dark:border-white/10 dark:bg-white/[0.03] h-fit">
+          <ScrollAnimate
+            direction="up"
+            delay={220}
+            duration={850}
+            className="rounded-2xl border border-black/10 bg-white/40 p-5 dark:border-white/10 dark:bg-white/[0.03] h-fit"
+          >
             <h3 className="mb-4 text-xs font-bold uppercase tracking-wide text-[#C9A868]">
               Interior Photos
             </h3>
             <InteriorPhotosGrid images={interiorImages} />
-          </div>
+          </ScrollAnimate>
         )}
       </div>
     </section>

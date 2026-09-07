@@ -5,6 +5,7 @@ import { ArrowRight, BadgeCheck, Phone } from 'lucide-react';
 import { leadService } from '@/services/leadService';
 import type { Yacht } from '../types/Yacht.types';
 import { getYachtImageUrl } from '../utils/yacht.utils';
+import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 interface YachtEnquiryFormProps {
   yacht: Yacht;
@@ -52,7 +53,7 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-fadeIn"
       role="dialog"
       aria-modal="true"
       aria-labelledby="yacht-enquiry-title"
@@ -60,12 +61,14 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
     >
       {status === 'sent' ? (
         // Thank you popup
-        <div
+        <ScrollAnimate
+          direction="zoom"
+          duration={400}
           className="relative w-full max-w-lg rounded-2xl bg-white p-10 text-center shadow-2xl sm:p-8"
           onClick={(event) => event.stopPropagation()}
         >
           <div className="mx-auto flex h-16 w-16 items-center justify-center">
-            <BadgeCheck className="h-16 w-16 text-[#fffff]" strokeWidth={1.5} fill="#0E2D4A" z-10 />
+            <BadgeCheck className="h-16 w-16 text-white" strokeWidth={1.5} fill="#0E2D4A" />
           </div>
           <h2 className="mt-6 text-2xl font-bold uppercase tracking-wide text-[#0E2D4A] sm:text-3xl">
             Thank You
@@ -80,10 +83,12 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
           >
             Close
           </button>
-        </div>
+        </ScrollAnimate>
       ) : (
         // Enquiry form
-        <div
+        <ScrollAnimate
+          direction="zoom"
+          duration={450}
           className="relative grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white text-black shadow-2xl md:grid-cols-2"
           onClick={(event) => event.stopPropagation()}
         >
@@ -194,7 +199,7 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
               </a>
             </div>
           </div>
-        </div>
+        </ScrollAnimate>
       )}
     </div>
   );

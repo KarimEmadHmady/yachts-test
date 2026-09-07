@@ -1,11 +1,17 @@
 import Image from "next/image";
+import { ScrollAnimate } from "@/components/common/ScrollAnimate";
 
 export default function Hero() {
   return (
     <section className="relative bg-[#f7f7f7] text-black dark:bg-[#0E2D4A] dark:text-white rounded-b-[30px] overflow-hidden transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 pt-8 pb-10">
         {/* Image card */}
-        <div className="relative w-full h-[280px] sm:h-[360px] md:h-[440px] rounded-[24px] overflow-hidden">
+        <ScrollAnimate
+          direction="up"
+          distance={24}
+          duration={900}
+          className="relative w-full h-[280px] sm:h-[360px] md:h-[440px] rounded-[24px] overflow-hidden"
+        >
           <Image
             src="/home/hero-yacht.png"
             alt="Woman enjoying a marine escape on a yacht deck"
@@ -19,25 +25,31 @@ export default function Hero() {
 
           {/* Text overlay */}
           <div className="absolute bottom-6 left-6 right-6 sm:bottom-10 sm:left-10 sm:right-10">
-            <p className="text-xs sm:text-sm font-bold tracking-[0.3em] uppercase text-[#C9A868] mb-2">
-              Discover
-            </p>
+            <ScrollAnimate direction="up" delay={200} distance={25}>
+              <p className="text-xs sm:text-sm font-bold tracking-[0.3em] uppercase text-[#C9A868] mb-2">
+                Discover
+              </p>
+            </ScrollAnimate>
 
-            <h1 className="text-2xl sm:text-3xl md:text-4xl font-light uppercase tracking-wide text-white max-w-xl leading-snug">
-              The Brilliance Of Marine Escapes
-            </h1>
+            <ScrollAnimate direction="up" delay={350} distance={25}>
+              <h1 className="text-2xl sm:text-3xl md:text-4xl font-light uppercase tracking-wide text-white max-w-xl leading-snug">
+                The Brilliance Of Marine Escapes
+              </h1>
+            </ScrollAnimate>
           </div>
-        </div>
+        </ScrollAnimate>
 
         {/* Description */}
-        <p className="text-sm text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed mt-6 transition-colors duration-300">
-          <span className="font-semibold text-black dark:text-white">
-            Blue Horizon
-          </span>{" "}
-          Marine Concepts Provides Premium Marine Solutions, Combining Luxury
-          Design, Precision Engineering And Bespoke Service To Create
-          Unforgettable Experiences On The Water
-        </p>
+        <ScrollAnimate direction="up" delay={500} distance={20}>
+          <p className="text-sm text-gray-700 dark:text-gray-300 max-w-2xl leading-relaxed mt-6 transition-colors duration-300">
+            <span className="font-semibold text-black dark:text-white">
+              Blue Horizon
+            </span>{" "}
+            Marine Concepts Provides Premium Marine Solutions, Combining Luxury
+            Design, Precision Engineering And Bespoke Service To Create
+            Unforgettable Experiences On The Water
+          </p>
+        </ScrollAnimate>
       </div>
     </section>
   );

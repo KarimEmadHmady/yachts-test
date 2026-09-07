@@ -130,10 +130,11 @@ const filteredByCategory = useMemo(() => {
 
           {!isLoading && !error && paginatedYachts.length > 0 && (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-3 lg:grid-cols-4">
-              {paginatedYachts.map((yacht) => (
+              {paginatedYachts.map((yacht, index) => (
                 <YachtCard
                   key={yacht.id}
                   yacht={yacht}
+                  index={index}
                   onClick={() => router.push(`/new-boats/${encodeURIComponent(yacht.slug)}`)}
                 />
               ))}

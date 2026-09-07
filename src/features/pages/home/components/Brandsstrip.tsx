@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { ScrollAnimate } from "@/components/common/ScrollAnimate";
 
 const BRANDS = [
   {
@@ -23,12 +24,14 @@ const BRANDS = [
 
 export default function BrandsStrip() {
   return (
-    <section className="relative bg-[#fffff] dark:bg-[#012241] transition-colors duration-300">
+    <section className="relative bg-white dark:bg-[#012241] transition-colors duration-300">
       <div className="max-w-7xl mx-auto px-6 py-10">
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
-          {BRANDS.map((brand) => (
-            <div
+          {BRANDS.map((brand, index) => (
+            <ScrollAnimate
               key={brand.name}
+              direction="up"
+              delay={index * 150}
               className="group flex items-center justify-center h-28 sm:h-28 rounded-2xl bg-gray-200 dark:bg-gray-200 overflow-hidden cursor-pointer"
             >
               <Image
@@ -38,7 +41,7 @@ export default function BrandsStrip() {
                 height={brand.height}
                 className="object-contain max-h-24 w-auto transition-transform duration-500 ease-out group-hover:scale-110"
               />
-            </div>
+            </ScrollAnimate>
           ))}
         </div>
       </div>

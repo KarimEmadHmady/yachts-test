@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 import { leadService } from '@/services/leadService';
+import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 export default function ContactFormModal() {
   const [form, setForm] = useState({
@@ -38,13 +39,17 @@ export default function ContactFormModal() {
   const reset = () => setStatus('idle');
 
   return (
-    <section className="relative bg-white dark:bg-[#012241] transition-colors duration-300">
+    <section className="relative bg-white dark:bg-[#012241] transition-colors duration-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 py-16">
         {status === 'sent' ? (
           // Thank you card
-          <div className="mx-auto w-full max-w-lg rounded-2xl border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] p-10 text-center shadow-sm sm:p-8">
+          <ScrollAnimate
+            direction="zoom"
+            duration={450}
+            className="mx-auto w-full max-w-lg rounded-2xl border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] p-10 text-center shadow-sm sm:p-8"
+          >
             <div className="mx-auto flex h-16 w-16 items-center justify-center">
-              <BadgeCheck className="h-16 w-16 text-[#fffff]" strokeWidth={1.5} fill="#0E2D4A" />
+              <BadgeCheck className="h-16 w-16 text-white" strokeWidth={1.5} fill="#0E2D4A" />
             </div>
             <h2 className="mt-6 text-2xl font-bold uppercase tracking-wide text-[#0E2D4A] dark:text-white sm:text-3xl">
               Thank You
@@ -59,11 +64,18 @@ export default function ContactFormModal() {
             >
               Send Another Message
             </button>
-          </div>
+          </ScrollAnimate>
         ) : (
           // Contact form
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-            <form onSubmit={submit} className="flex flex-col gap-4">
+            <ScrollAnimate
+              direction="up"
+              delay={100}
+              duration={850}
+              as="form"
+              onSubmit={submit}
+              className="flex flex-col gap-4"
+            >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
                   required
@@ -121,16 +133,21 @@ export default function ContactFormModal() {
                   <p className="text-xs text-red-500">Something went wrong, please try again.</p>
                 )}
               </div>
-            </form>
+            </ScrollAnimate>
 
             {/* Image side */}
-            <div className="relative min-h-[280px] sm:min-h-[360px] lg:min-h-full overflow-hidden rounded-[24px]">
+            <ScrollAnimate
+              direction="up"
+              delay={250}
+              duration={900}
+              className="relative min-h-[280px] sm:min-h-[360px] lg:min-h-full overflow-hidden rounded-[24px]"
+            >
               <img
                 src="/contactform.png"
                 alt="Guests enjoying a yacht voyage"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-            </div>
+            </ScrollAnimate>
           </div>
         )}
       </div>

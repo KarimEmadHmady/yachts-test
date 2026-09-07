@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { leadService } from '@/services/leadService';
+import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 export default function ServicePopup() {
   const [isOpen, setIsOpen] = useState(true);
@@ -33,19 +34,22 @@ export default function ServicePopup() {
     }
   };
 
-
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4 backdrop-blur-sm animate-fadeIn"
       role="dialog"
       aria-modal="true"
       aria-labelledby="service-popup-title"
     >
       {status === 'sent' ? (
         // Thank you popup
-        <div className="relative w-full max-w-lg rounded-2xl bg-white p-10 text-center shadow-2xl sm:p-8">
+        <ScrollAnimate
+          direction="zoom"
+          duration={400}
+          className="relative w-full max-w-lg rounded-2xl bg-white p-10 text-center shadow-2xl sm:p-8"
+        >
           <div className="mx-auto flex h-16 w-16 items-center justify-center">
-            <BadgeCheck className="h-16 w-16 text-[#fffff]" strokeWidth={1.5} fill="#0E2D4A" />
+            <BadgeCheck className="h-16 w-16 text-white" strokeWidth={1.5} fill="#0E2D4A" />
           </div>
           <h2 className="mt-6 text-2xl font-bold uppercase tracking-wide text-[#0E2D4A] sm:text-3xl">
             Thank You
@@ -59,20 +63,24 @@ export default function ServicePopup() {
             onClick={() => setStatus('idle')}
             className="mx-auto mt-6 mb-4 mr-4 inline-flex w-fit items-center gap-2 rounded-full border border-[#C9A868] px-6 py-2.5 text-sm text-[#C9A868] transition-colors hover:bg-[#C9A868] hover:text-white"
           >
-             service
+            service
             <ArrowUpRight className="h-4 w-4" />
           </button>
-           <Link
-              href="/"
-              className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0E2D4A] px-6 py-2.5 text-sm text-[#0E2D4A] transition-colors hover:bg-[#0E2D4A] hover:text-white"
-            >
-              Home
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
-        </div>
+          <Link
+            href="/"
+            className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0E2D4A] px-6 py-2.5 text-sm text-[#0E2D4A] transition-colors hover:bg-[#0E2D4A] hover:text-white"
+          >
+            Home
+            <ArrowUpRight className="h-4 w-4" />
+          </Link>
+        </ScrollAnimate>
       ) : (
         // Service form
-        <div className="relative grid w-full max-w-3xl overflow-hidden rounded-2xl bg-white text-black shadow-2xl md:grid-cols-2">
+        <ScrollAnimate
+          direction="zoom"
+          duration={450}
+          className="relative grid w-full max-w-3xl overflow-hidden rounded-2xl bg-white text-black shadow-2xl md:grid-cols-2"
+        >
           {/* Form side */}
           <div className="relative p-6 sm:p-8">
             <div className="flex items-center justify-between mb-5">
@@ -82,13 +90,13 @@ export default function ServicePopup() {
               >
                 Service
               </h2>
-           <Link
-              href="/"
-              className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0E2D4A] px-2 py-1 text-sm text-[#0E2D4A] transition-colors hover:bg-[#0E2D4A] hover:text-white"
-            >
-              Home
-              <ArrowUpRight className="h-4 w-4" />
-            </Link>
+              <Link
+                href="/"
+                className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0E2D4A] px-3 py-1 text-sm text-[#0E2D4A] transition-colors hover:bg-[#0E2D4A] hover:text-white"
+              >
+                Home
+                <ArrowUpRight className="h-4 w-4" />
+              </Link>
             </div>
 
             <p className="mt-2 text-sm text-black/50">
@@ -152,7 +160,7 @@ export default function ServicePopup() {
               className="h-full w-full rounded-3xl object-cover p-3"
             />
           </div>
-        </div>
+        </ScrollAnimate>
       )}
     </div>
   );
