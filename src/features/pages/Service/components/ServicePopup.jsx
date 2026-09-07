@@ -2,16 +2,26 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { ArrowUpRight, BadgeCheck } from 'lucide-react';
+import { useRouter } from 'next/navigation';
+import { ArrowLeft, ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { leadService } from '@/services/leadService';
 import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 export default function ServicePopup() {
+  const router = useRouter();
   const [isOpen, setIsOpen] = useState(true);
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '' });
   const [status, setStatus] = useState('idle');
 
   if (!isOpen) return null;
+
+  const handleBack = () => {
+    if (typeof window !== 'undefined' && window.history.length > 1) {
+      router.back();
+    } else {
+      router.push('/');
+    }
+  };
 
   const update = (patch) => setForm((prev) => ({ ...prev, ...patch }));
 
@@ -66,13 +76,14 @@ export default function ServicePopup() {
             service
             <ArrowUpRight className="h-4 w-4" />
           </button>
-          <Link
-            href="/"
+          <button
+            type="button"
+            onClick={handleBack}
             className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0E2D4A] px-6 py-2.5 text-sm text-[#0E2D4A] transition-colors hover:bg-[#0E2D4A] hover:text-white"
           >
-            Home
-            <ArrowUpRight className="h-4 w-4" />
-          </Link>
+            <ArrowLeft className="h-4 w-4" />
+            Back
+          </button>
         </ScrollAnimate>
       ) : (
         // Service form
@@ -90,13 +101,14 @@ export default function ServicePopup() {
               >
                 Service
               </h2>
-              <Link
-                href="/"
+              <button
+                type="button"
+                onClick={handleBack}
                 className="inline-flex w-fit items-center gap-2 rounded-full border border-[#0E2D4A] px-3 py-1 text-sm text-[#0E2D4A] transition-colors hover:bg-[#0E2D4A] hover:text-white"
               >
-                Home
-                <ArrowUpRight className="h-4 w-4" />
-              </Link>
+                <ArrowLeft className="h-4 w-4" />
+                Back
+              </button>
             </div>
 
             <p className="mt-2 text-sm text-black/50">
