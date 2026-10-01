@@ -11,7 +11,7 @@ export function BlogGallery({ blog }) {
 
   return (
     <div className="grid grid-cols-1 gap-4 lg:grid-cols-[1.35fr_1fr]">
-      <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-black/5 dark:bg-white/5 lg:aspect-auto lg:h-[430px]">
+      <div data-reveal="up" data-reveal-delay="200" data-reveal-duration="900" className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-black/5 dark:bg-white/5 lg:aspect-auto lg:h-[430px]">
         <img
           src={getBlogImageUrl(featuredImage.image_path)}
           alt={blog.title}
@@ -20,10 +20,13 @@ export function BlogGallery({ blog }) {
       </div>
 
       {extraImages.length > 0 && (
-        <div className="grid grid-cols-2 gap-3 lg:h-[430px]">
+        <div data-reveal-stagger="120" className="grid grid-cols-2 gap-3 lg:h-[430px]">
           {extraImages.map((image, index) => (
             <div
               key={image.id || `${image.image_path}-${index}`}
+              data-reveal="up"
+              data-reveal-delay="300"
+              data-reveal-duration="850"
               className={`relative h-full overflow-hidden rounded-2xl bg-black/5 dark:bg-white/5 ${index === 0 ? 'col-span-2' : ''}`}
             >
               <img

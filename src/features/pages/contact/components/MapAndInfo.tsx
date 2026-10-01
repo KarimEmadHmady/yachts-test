@@ -1,7 +1,6 @@
 'use client';
 
 import { Facebook, Instagram, MapPin, Phone, Mail } from 'lucide-react';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 const SOCIAL_LINKS = [
   { icon: Facebook, href: '#', label: 'Facebook' },
@@ -33,26 +32,29 @@ export default function ContactUs() {
     <section className="relative bg-white dark:bg-[#012241] transition-colors duration-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 py-16">
         {/* Heading */}
-        <ScrollAnimate direction="up" delay={50} distance={20}>
-          <h1 className="font-serif font-bold text-2xl sm:text-3xl text-black dark:text-white mb-3">
-            Contact Us
-          </h1>
-        </ScrollAnimate>
+        <h1
+          data-reveal="up"
+          data-reveal-delay="50"
+          className="font-serif font-bold text-2xl sm:text-3xl text-black dark:text-white mb-3"
+        >
+          Contact Us
+        </h1>
 
-        <ScrollAnimate direction="up" delay={150} distance={20}>
-          <p className="text-sm text-black/70 dark:text-white/70 leading-relaxed max-w-2xl mb-8">
-            Whether You&apos;re Planning Your Next Voyage Or Need Expert Marine Support,
-            Our Team Is Ready To Assist You. Get In Touch With Us And Experience
-            Premium Service Tailored To Your Maritime Needs.
-          </p>
-        </ScrollAnimate>
+        <p
+          data-reveal="up"
+          data-reveal-delay="150"
+          className="text-sm text-black/70 dark:text-white/70 leading-relaxed max-w-2xl mb-8"
+        >
+          Whether You&apos;re Planning Your Next Voyage Or Need Expert Marine Support,
+          Our Team Is Ready To Assist You. Get In Touch With Us And Experience
+          Premium Service Tailored To Your Maritime Needs.
+        </p>
 
         {/* Map */}
-        <ScrollAnimate
-          direction="up"
-          delay={200}
-          distance={30}
-          duration={900}
+        <div
+          data-reveal="up"
+          data-reveal-delay="200"
+          data-reveal-duration="900"
           className="relative w-full h-[280px] sm:h-[360px] lg:h-[400px] rounded-[16px] sm:rounded-[24px] overflow-hidden border border-white/10"
         >
           <iframe
@@ -77,16 +79,15 @@ export default function ContactUs() {
               </a>
             ))}
           </div>
-        </ScrollAnimate>
+        </div>
 
         {/* Info cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mt-8">
-          {INFO_CARDS.map(({ icon: Icon, title, lines }, index) => (
-            <ScrollAnimate
+        <div data-reveal-stagger="120" className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-5 mt-8">
+          {INFO_CARDS.map(({ icon: Icon, title, lines }) => (
+            <div
               key={title}
-              direction="up"
-              delay={index * 120}
-              duration={850}
+              data-reveal="up"
+              data-reveal-duration="850"
               className="rounded-[18px] border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] px-6 py-8 text-center transition-colors duration-300"
             >
               <div className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-[#C9A868] text-[#0E2D4A]">
@@ -103,7 +104,7 @@ export default function ContactUs() {
                   {line}
                 </p>
               ))}
-            </ScrollAnimate>
+            </div>
           ))}
         </div>
       </div>

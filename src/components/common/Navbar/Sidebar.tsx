@@ -7,6 +7,7 @@ import Image from 'next/image';
 import { usePathname, useRouter } from 'next/navigation';
 import { useAuth } from '@/features/auth/hooks/useAuth';
 import { useDashboardSubmissions } from '@/features/dashboard/submissions/hooks/useDashboardSubmissions';
+import { useTheme } from '@/hooks/useTheme';
 
 
 
@@ -14,6 +15,8 @@ export default function Sidebar() {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState<string | null>(null);
   const [yachtManagerOpen, setyachtManagerOpen] = useState(false);
+  const { theme, handleThemeChange } = useTheme();
+
 
   const pathname = usePathname();
   const router = useRouter();
@@ -41,11 +44,11 @@ export default function Sidebar() {
     return () => clearInterval(interval);
   }, [isAuthenticated, fetchSubmissions]);
 
-useEffect(() => {
-  const handler = () => fetchSubmissions('pending').catch(() => undefined);
-  window.addEventListener('submissions-updated', handler);
-  return () => window.removeEventListener('submissions-updated', handler);
-}, [fetchSubmissions]);
+  useEffect(() => {
+    const handler = () => fetchSubmissions('pending').catch(() => undefined);
+    window.addEventListener('submissions-updated', handler);
+    return () => window.removeEventListener('submissions-updated', handler);
+  }, [fetchSubmissions]);
 
   useEffect(() => {
     if (
@@ -108,13 +111,22 @@ useEffect(() => {
                   <span className={`block w-full h-[1.5px] bg-black dark:bg-white transition-all duration-300 ${isOpen ? '-rotate-45 -translate-y-[6px]' : 'rotate-0 translate-y-0'}`}></span>
                 </div>
               </button>
-              <Link href="/dashboard" className="flex ms-2 md:me-24">
-                <Image src="/logo.png" alt="Logo" width={80} height={30} className="me-3 object-contain" />
+              <Link href="/dashboard" data-reveal="fade" className="flex ms-2 md:me-24">
+                <Image
+                  className=" me-3 object-contain"
+                  src={theme === 'light' ? '/logo-black.png' : '/logo.png'}
+                  alt="Blue Horizon Marine Concepts"
+                  width={80}
+                  height={30}
+
+                  priority
+                />
+
               </Link>
             </div>
             <div className="flex items-center" >
               <div className="flex items-center ms-3 relative">
-                <div  >
+                <div data-reveal="fade" data-reveal-delay="100">
                   <button
                     type="button"
                     className="flex text-sm bg-black/10 dark:bg-white/10 rounded-full focus:ring-4 focus:ring-black/20 dark:focus:ring-white/20 transition-all duration-300 hover:scale-110 hover:ring-4 hover:ring-black/30 dark:hover:ring-white/50"
@@ -177,12 +189,12 @@ useEffect(() => {
 
       <aside id="top-bar-sidebar" className="fixed top-0 left-0 z-40 w-64 h-full transition-all duration-500 ease-in-out -translate-x-full sm:translate-x-0" aria-label="Sidebar">
         <div className="h-full px-1 py-4 overflow-y-auto bg-[#f7f7f7] dark:bg-[#0E2D4A] border-default transition-colors">
-          <ul className="space-y-4 font-medium mt-[60px]">
+          <ul data-reveal-stagger="70" className="space-y-4 font-medium mt-[60px]">
 
             {isAdmin && (
               <>
                 {/* Dashboard */}
-                <li>
+                <li data-reveal="start" data-reveal-duration="600">
                   <Link href="/dashboard" className="flex items-center px-2 py-1.5 text-black dark:text-white rounded-xl hover:bg-black/10 dark:hover:bg-white/20 group transition-all duration-300 transform hover:translate-x-2 w-[95%]">
                     <svg className="w-5 h-5 text-black dark:text-white transition duration-300 group-hover:scale-110 group-hover:text-[#008dff]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 6.025A7.5 7.5 0 1 0 17.975 14H10V6.025Z" />
@@ -195,7 +207,7 @@ useEffect(() => {
 
 
                 {/* ── yacht Manager submenu ── */}
-                <li>
+                <li data-reveal="start" data-reveal-duration="600">
                   <button
                     type="button"
                     onClick={() => setyachtManagerOpen(!yachtManagerOpen)}
@@ -221,9 +233,9 @@ useEffect(() => {
                   </button>
 
                   {yachtManagerOpen && (
-                    <ul className="ms-8 mt-2 space-y-1">
+                    <ul data-reveal-stagger="50" className="ms-8 mt-2 space-y-1">
                       {/* All yachts */}
-                      <li>
+                      <li data-reveal="start" data-reveal-duration="450">
                         <Link href="/dashboard/yachts" className={subLinkClass(pathname === '/dashboard/yachts' || (pathname.includes('/dashboard/yachts') && !pathname.includes('yachts-manager')))}>
                           <svg className="w-4 h-4 me-2 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9" />
@@ -233,7 +245,7 @@ useEffect(() => {
                       </li>
 
                       {/* yacht Waiting Approve */}
-                      <li>
+                      <li data-reveal="start" data-reveal-duration="450">
                         <Link href="/dashboard/waiting-approve" className={subLinkClass(pathname.includes('/dashboard/waiting-approve'))}>
                           <svg className="w-4 h-4 me-2 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle cx="12" cy="12" r="9" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -252,7 +264,7 @@ useEffect(() => {
                       </li>
 
                       {/* Add yacht */}
-                      <li>
+                      <li data-reveal="start" data-reveal-duration="450">
                         <Link href="/dashboard/edit-yacht/new" className={subLinkClass(pathname.includes('/dashboard/edit-yacht'))}>
                           <svg className="w-4 h-4 me-2 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M9 10V6a3 3 0 0 1 3-3v0a3 3 0 0 1 3 3v4m3-2 .917 11.923A1 1 0 0 1 17.92 21H6.08a1 1 0 0 1-.997-1.077L6 8h12Z" />
@@ -262,7 +274,7 @@ useEffect(() => {
                       </li>
 
                       {/* brands */}
-                      <li>
+                      <li data-reveal="start" data-reveal-duration="450">
                         <Link href="/dashboard/brands" className={subLinkClass(pathname.includes('/dashboard/brand'))}>
                           <svg className="w-4 h-4 me-2 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M20.59 13.41 10.59 3.41a2 2 0 0 0-2.83 0L3.41 8.76a2 2 0 0 0 0 2.83l10 10a2 2 0 0 0 2.83 0l4.35-4.35a2 2 0 0 0 0-2.83z" />
@@ -272,7 +284,7 @@ useEffect(() => {
                         </Link>
                       </li>
                       {/* Categories */}
-                      <li>
+                      <li data-reveal="start" data-reveal-duration="450">
                         <Link href="/dashboard/category" className={subLinkClass(pathname.includes('/dashboard/category'))}>
                           <svg
                             className="w-4 h-4 me-2 shrink-0"
@@ -292,7 +304,7 @@ useEffect(() => {
                         </Link>
                       </li>
 
-                      <li>
+                      <li data-reveal="start" data-reveal-duration="450">
                         <Link href="/dashboard/amenities" className={subLinkClass(pathname.includes('/dashboard/amenities'))}>
                           <svg className="w-4 h-4 me-2 shrink-0" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M12 2v20M2 12h20" />
@@ -307,7 +319,7 @@ useEffect(() => {
                   )}
                 </li>
 
-                <li>
+                <li data-reveal="start" data-reveal-duration="600">
                   <Link href="/dashboard/leads" className="flex items-center px-2 py-1.5 text-black dark:text-white rounded-xl hover:bg-black/10 dark:hover:bg-white/20 group transition-all duration-300 transform hover:translate-x-2 w-[95%]">
                     <svg
                       className="shrink-0 w-5 h-5 text-black dark:text-white transition duration-300 group-hover:scale-110 group-hover:text-[#008dff]"
@@ -336,7 +348,7 @@ useEffect(() => {
                 </li>
 
                 {/* Users */}
-                <li>
+                <li data-reveal="start" data-reveal-duration="600">
                   <Link href="/dashboard/users" className="flex items-center px-2 py-1.5 text-black dark:text-white rounded-xl hover:bg-black/10 dark:hover:bg-white/20 group transition-all duration-300 transform hover:translate-x-2 w-[95%]">
                     <svg className="shrink-0 w-5 h-5 text-black dark:text-white transition duration-300 group-hover:scale-110 group-hover:text-[#008dff]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeLinecap="round" strokeWidth="2" d="M16 19h4a1 1 0 0 0 1-1v-1a3 3 0 0 0-3-3h-2m-2.236-4a3 3 0 1 0 0-4M3 18v-1a3 3 0 0 1 3-3h4a3 3 0 0 1 3 3v1a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1Zm8-10a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -344,7 +356,7 @@ useEffect(() => {
                     <span className="flex-1 ms-3 whitespace-nowrap text-black dark:text-white">Users</span>
                   </Link>
                 </li>
-                <li>
+                <li data-reveal="start" data-reveal-duration="600">
                   <Link href="/dashboard/blogs" className="flex items-center px-2 py-1.5 text-black dark:text-white rounded-xl hover:bg-black/10 dark:hover:bg-white/20 group transition-all duration-300 transform hover:translate-x-2 w-[95%]">
                     <svg className="w-4 h-4 me-2 shrink-0  group-hover:scale-110 group-hover:text-[#008dff]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                       <path stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" d="M4 5.5A2.5 2.5 0 0 1 6.5 3H18a2 2 0 0 1 2 2v13.5A2.5 2.5 0 0 1 17.5 21H6.5A2.5 2.5 0 0 1 4 18.5v-13Z" />
@@ -358,7 +370,7 @@ useEffect(() => {
 
             {/* Manager Only */}
             {isManager && (
-              <li>
+              <li data-reveal="start" data-reveal-duration="600">
                 <Link href="/dashboard/yachts" className="flex items-center px-2 py-1.5 text-black dark:text-white rounded-xl hover:bg-black/10 dark:hover:bg-white/20 group transition-all duration-300 transform hover:translate-x-2 w-[95%]">
                   <svg className="shrink-0 w-5 h-5 text-black dark:text-white transition duration-300 group-hover:scale-110 group-hover:text-[#008dff]" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 13h3.439a.991.991 0 0 1 .908.6 3.978 3.978 0 0 0 7.306 0 .99.99 0 0 1 .908-.6H20M4 13v6a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-6M4 13l2-9h12l2 9M9 7h6m-7 3h8" />
@@ -370,7 +382,7 @@ useEffect(() => {
 
             {/* Logout */}
             {isAuthenticated && (
-              <li>
+              <li data-reveal="start" data-reveal-duration="600">
                 <Link href="" className="flex items-center px-2 py-1.5 text-black dark:text-white rounded-xl hover:bg-black/10 dark:hover:bg-white/20 group transition-all duration-300 transform hover:translate-x-2 w-[95%]" onClick={handleLogout}>
                   <svg className="shrink-0 w-5 h-5 text-red-500 transition duration-300 group-hover:scale-110" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                     <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M16 12H4m12 0-4 4m4-4-4-4m3-4h2a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3h-2" />

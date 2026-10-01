@@ -5,7 +5,6 @@ import { ArrowRight, BadgeCheck, Phone } from 'lucide-react';
 import { leadService } from '@/services/leadService';
 import type { Yacht } from '../types/Yacht.types';
 import { getYachtImageUrl } from '../utils/yacht.utils';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 interface YachtEnquiryFormProps {
   yacht: Yacht;
@@ -61,9 +60,10 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
     >
       {status === 'sent' ? (
         // Thank you popup
-        <ScrollAnimate
-          direction="zoom"
-          duration={400}
+        <div
+          key="thank-you"
+          data-reveal="scale"
+          data-reveal-duration="400"
           className="relative w-full max-w-lg rounded-2xl bg-white p-10 text-center shadow-2xl sm:p-8"
           onClick={(event) => event.stopPropagation()}
         >
@@ -83,12 +83,13 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
           >
             Close
           </button>
-        </ScrollAnimate>
+        </div>
       ) : (
         // Enquiry form
-        <ScrollAnimate
-          direction="zoom"
-          duration={450}
+        <div
+          key="form"
+          data-reveal="scale"
+          data-reveal-duration="450"
           className="relative grid w-full max-w-4xl overflow-hidden rounded-2xl bg-white text-black shadow-2xl md:grid-cols-2"
           onClick={(event) => event.stopPropagation()}
         >
@@ -199,7 +200,7 @@ export function YachtEnquiryForm({ yacht, isOpen, onClose }: YachtEnquiryFormPro
               </a>
             </div>
           </div>
-        </ScrollAnimate>
+        </div>
       )}
     </div>
   );

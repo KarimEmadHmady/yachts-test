@@ -72,6 +72,8 @@ export function SellYourBoatModal({
       onClick={onClose}
     >
       <div
+        data-reveal="scale"
+        data-reveal-duration="450"
         onClick={(e) => e.stopPropagation()}
         className="
           grid

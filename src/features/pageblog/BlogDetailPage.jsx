@@ -33,7 +33,7 @@ export default function BlogDetailPage({ id }) {
   return (
     <main className="min-h-screen bg-[#fffff] px-6 py-8 text-black dark:bg-[#0E2D4A] dark:text-white md:px-12 md:py-10">
       <div className="mx-auto max-w-7xl">
-        <div className="mb-6 flex items-center justify-between gap-4">
+        <div data-reveal="up" data-reveal-delay="50" className="mb-6 flex items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <button
               type="button"
@@ -51,7 +51,7 @@ export default function BlogDetailPage({ id }) {
           </span>
         </div>
 
-        <h1 className="max-w-4xl text-2xl font-bold uppercase tracking-wide md:text-4xl">{blog.title}</h1>
+        <h1 data-reveal="up" data-reveal-delay="120" className="max-w-4xl text-2xl font-bold uppercase tracking-wide md:text-4xl">{blog.title}</h1>
 
         {/* Gallery: full width, 4 images exactly as before */}
         <div className="mt-7">

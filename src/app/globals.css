@@ -175,3 +175,62 @@ body {
 }
 
 
+
+/* ================== Scroll reveal ==================
+   Driven by src/components/animations/ScrollReveal.tsx — usage in docs/animations.md.
+   Hidden state only applies when scripting is enabled and motion is allowed, so
+   no-JS and reduced-motion users always see content. */
+:root {
+  --reveal-duration: 1000ms;
+  --reveal-easing: cubic-bezier(0.22, 1, 0.36, 1);
+  --reveal-distance: 24px;
+  --reveal-scale: 0.96;
+  --reveal-blur: 8px;
+  --reveal-stagger-step: 110ms;
+  /* Must match FAILSAFE_MS in ScrollReveal.tsx */
+  --reveal-failsafe: 4s;
+}
+
+/* Inherited, so the nearest dir="" ancestor wins: start/end flip in RTL */
+[dir="ltr"] { --reveal-dir: 1; }
+[dir="rtl"] { --reveal-dir: -1; }
+
+@media screen and (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  [data-reveal]:not([data-reveal="none"]):not([data-revealed]) {
+    opacity: 0;
+    transform: translate3d(var(--reveal-x, 0), var(--reveal-y, 0), 0) scale(var(--reveal-s, 1));
+  }
+
+  /* If the JS never takes over the element (bundle failed), show it anyway */
+  [data-reveal]:not([data-reveal="none"]):not([data-revealed]):not([data-reveal-observed]) {
+    animation: reveal-failsafe 1ms var(--reveal-failsafe) forwards;
+  }
+
+  [data-reveal=""],
+  [data-reveal="up"] { --reveal-y: var(--reveal-distance); }
+  [data-reveal="down"] { --reveal-y: calc(var(--reveal-distance) * -1); }
+  [data-reveal="start"] { --reveal-x: calc(var(--reveal-distance) * -1 * var(--reveal-dir, 1)); }
+  [data-reveal="end"] { --reveal-x: calc(var(--reveal-distance) * var(--reveal-dir, 1)); }
+  [data-reveal="scale"] { --reveal-s: var(--reveal-scale); }
+  [data-reveal="blur"] { --reveal-y: calc(var(--reveal-distance) / 2); }
+  [data-reveal="blur"]:not([data-revealed]) { filter: blur(var(--reveal-blur)); }
+
+  /* Transition + will-change only while revealing; afterwards the element's own
+     transition/transform classes apply again untouched. */
+  [data-reveal][data-revealed]:not([data-reveal-done]) {
+    transition-property: opacity, transform, filter;
+    transition-duration: var(--reveal-duration);
+    transition-timing-function: var(--reveal-easing);
+    transition-delay: calc(var(--reveal-delay, 0ms) + var(--reveal-index, 0) * var(--reveal-stagger-step));
+    will-change: opacity, transform;
+  }
+}
+
+@keyframes reveal-failsafe {
+  to {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
+

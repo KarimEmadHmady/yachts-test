@@ -121,12 +121,11 @@ export default function YachtsPage() {
           )}
 
           {!isLoading && !error && paginatedYachts.length > 0 && (
-            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-              {paginatedYachts.map((yacht, index) => (
+            <div data-reveal-stagger="90" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {paginatedYachts.map((yacht) => (
                 <YachtCard
                   key={yacht.id}
                   yacht={yacht}
-                  index={index}
                   onClick={() => router.push(`/pre-owned/${encodeURIComponent(yacht.slug)}`)}
                 />
               ))}

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { ArrowRight, BadgeCheck } from 'lucide-react';
 import { leadService } from '@/services/leadService';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 export default function ContactFormModal() {
   const [form, setForm] = useState({
@@ -43,9 +42,10 @@ export default function ContactFormModal() {
       <div className="max-w-7xl mx-auto px-6 py-16">
         {status === 'sent' ? (
           // Thank you card
-          <ScrollAnimate
-            direction="zoom"
-            duration={450}
+          <div
+            key="thank-you"
+            data-reveal="scale"
+            data-reveal-duration="450"
             className="mx-auto w-full max-w-lg rounded-2xl border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] p-10 text-center shadow-sm sm:p-8"
           >
             <div className="mx-auto flex h-16 w-16 items-center justify-center">
@@ -64,20 +64,20 @@ export default function ContactFormModal() {
             >
               Send Another Message
             </button>
-          </ScrollAnimate>
+          </div>
         ) : (
           // Contact form
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
-            <ScrollAnimate
-              direction="up"
-              delay={100}
-              duration={850}
-              as="form"
+          <div key="form" className="grid grid-cols-1 lg:grid-cols-2 gap-6 lg:gap-8 items-stretch">
+            <form
               onSubmit={submit}
+              data-reveal-stagger="80"
               className="flex flex-col gap-4"
             >
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 <input
+                  data-reveal="up"
+                  data-reveal-delay="100"
+                  data-reveal-duration="700"
                   required
                   placeholder="First Name"
                   value={form.firstName}
@@ -85,6 +85,9 @@ export default function ContactFormModal() {
                   className="w-full rounded-full border border-black/15 dark:border-white/15 bg-[#f7f7f7] dark:bg-[#0E2D4A] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 text-sm px-5 py-3.5 outline-none transition-colors focus:border-[#C9A868]"
                 />
                 <input
+                  data-reveal="up"
+                  data-reveal-delay="100"
+                  data-reveal-duration="700"
                   required
                   placeholder="Last Name"
                   value={form.lastName}
@@ -94,6 +97,9 @@ export default function ContactFormModal() {
               </div>
 
               <input
+                data-reveal="up"
+                data-reveal-delay="100"
+                data-reveal-duration="700"
                 required
                 type="tel"
                 placeholder="Phone Number"
@@ -103,6 +109,9 @@ export default function ContactFormModal() {
               />
 
               <input
+                data-reveal="up"
+                data-reveal-delay="100"
+                data-reveal-duration="700"
                 required
                 type="email"
                 placeholder="E-Mail Address"
@@ -112,6 +121,9 @@ export default function ContactFormModal() {
               />
 
               <textarea
+                data-reveal="up"
+                data-reveal-delay="100"
+                data-reveal-duration="700"
                 placeholder="Your Message"
                 rows={6}
                 value={form.message}
@@ -119,7 +131,12 @@ export default function ContactFormModal() {
                 className="w-full flex-1 min-h-[140px] resize-none rounded-[22px] border border-black/15 dark:border-white/15 bg-[#f7f7f7] dark:bg-[#0E2D4A] text-black dark:text-white placeholder:text-black/40 dark:placeholder:text-white/40 text-sm px-5 py-4 outline-none transition-colors focus:border-[#C9A868]"
               />
 
-              <div className="flex items-center gap-4">
+              <div
+                data-reveal="up"
+                data-reveal-delay="100"
+                data-reveal-duration="700"
+                className="flex items-center gap-4"
+              >
                 <button
                   type="submit"
                   disabled={status === 'sending'}
@@ -133,13 +150,13 @@ export default function ContactFormModal() {
                   <p className="text-xs text-red-500">Something went wrong, please try again.</p>
                 )}
               </div>
-            </ScrollAnimate>
+            </form>
 
             {/* Image side */}
-            <ScrollAnimate
-              direction="up"
-              delay={250}
-              duration={900}
+            <div
+              data-reveal="up"
+              data-reveal-delay="250"
+              data-reveal-duration="900"
               className="relative min-h-[280px] sm:min-h-[360px] lg:min-h-full overflow-hidden rounded-[24px]"
             >
               <img
@@ -147,7 +164,7 @@ export default function ContactFormModal() {
                 alt="Guests enjoying a yacht voyage"
                 className="absolute inset-0 h-full w-full object-cover"
               />
-            </ScrollAnimate>
+            </div>
           </div>
         )}
       </div>

@@ -4,7 +4,6 @@ import { useState } from "react";
 import Link from "next/link";
 import { ArrowUpRight, BadgeCheck } from "lucide-react";
 import { leadService } from "@/services/leadService";
-import { ScrollAnimate } from "@/components/common/ScrollAnimate";
 
 export default function ContactCta() {
   const [form, setForm] = useState({ name: "", email: "", phone: "" });
@@ -37,10 +36,10 @@ export default function ContactCta() {
   return (
     <section className="relative bg-white dark:bg-[#012241] transition-colors duration-300 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6 py-16">
-        <ScrollAnimate
-          direction="up"
-          delay={100}
-          duration={850}
+        <div
+          data-reveal="up"
+          data-reveal-delay="100"
+          data-reveal-duration="850"
           className="relative rounded-[24px] border border-white/10 bg-[#f7f7f7] dark:bg-[#0E2D4A] px-6 py-8 sm:px-10 sm:py-10"
         >
           <h2 className="font-serif font-bold text-lg sm:text-2xl text-black dark:text-white mb-3 max-w-2xl leading-snug">
@@ -103,7 +102,7 @@ export default function ContactCta() {
               Privacy Policy
             </Link>
           </p>
-        </ScrollAnimate>
+        </div>
       </div>
 
       {status === "sent" && (

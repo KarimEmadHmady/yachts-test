@@ -5,7 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { ArrowLeft, ArrowUpRight, BadgeCheck } from 'lucide-react';
 import { leadService } from '@/services/leadService';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 export default function ServicePopup() {
   const router = useRouter();
@@ -53,9 +52,10 @@ export default function ServicePopup() {
     >
       {status === 'sent' ? (
         // Thank you popup
-        <ScrollAnimate
-          direction="zoom"
-          duration={400}
+        <div
+          key="thank-you"
+          data-reveal="scale"
+          data-reveal-duration="400"
           className="relative w-full max-w-lg rounded-2xl bg-white p-10 text-center shadow-2xl sm:p-8"
         >
           <div className="mx-auto flex h-16 w-16 items-center justify-center">
@@ -84,12 +84,13 @@ export default function ServicePopup() {
             <ArrowLeft className="h-4 w-4" />
             Back
           </button>
-        </ScrollAnimate>
+        </div>
       ) : (
         // Service form
-        <ScrollAnimate
-          direction="zoom"
-          duration={450}
+        <div
+          key="form"
+          data-reveal="scale"
+          data-reveal-duration="450"
           className="relative grid w-full max-w-3xl overflow-hidden rounded-2xl bg-white text-black shadow-2xl md:grid-cols-2"
         >
           {/* Form side */}
@@ -115,8 +116,11 @@ export default function ServicePopup() {
               Please Contact Us For More Enquiries
             </p>
 
-            <form onSubmit={submit} className="mt-6 grid gap-4">
+            <form onSubmit={submit} data-reveal-stagger="80" className="mt-6 grid gap-4">
               <input
+                data-reveal="up"
+                data-reveal-delay="150"
+                data-reveal-duration="700"
                 required
                 placeholder="Name"
                 value={form.name}
@@ -125,6 +129,9 @@ export default function ServicePopup() {
               />
 
               <input
+                data-reveal="up"
+                data-reveal-delay="150"
+                data-reveal-duration="700"
                 required
                 type="tel"
                 placeholder="Phone Number"
@@ -134,6 +141,9 @@ export default function ServicePopup() {
               />
 
               <input
+                data-reveal="up"
+                data-reveal-delay="150"
+                data-reveal-duration="700"
                 required
                 type="email"
                 placeholder="E-Mail Address"
@@ -143,6 +153,9 @@ export default function ServicePopup() {
               />
 
               <textarea
+                data-reveal="up"
+                data-reveal-delay="150"
+                data-reveal-duration="700"
                 placeholder="Your Message..."
                 rows={4}
                 value={form.message}
@@ -152,6 +165,9 @@ export default function ServicePopup() {
 
               <button
                 type="submit"
+                data-reveal="up"
+                data-reveal-delay="150"
+                data-reveal-duration="700"
                 disabled={status === 'sending'}
                 className="mt-1 inline-flex w-fit items-center gap-2 rounded-full border border-[#C9A868] px-6 py-2.5 text-sm text-[#C9A868] transition-colors hover:bg-[#C9A868] hover:text-white disabled:opacity-60"
               >
@@ -172,7 +188,7 @@ export default function ServicePopup() {
               className="h-full w-full rounded-3xl object-cover p-3"
             />
           </div>
-        </ScrollAnimate>
+        </div>
       )}
     </div>
   );

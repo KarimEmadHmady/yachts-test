@@ -8,7 +8,7 @@
  */
 export function YachtListingHeader({ activeCategory = 'ALL', onCategoryChange, onSellClick, categories = [] }) {
   return (
-    <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+    <div data-reveal="up" data-reveal-delay="100" className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
       <div
         className="
     flex gap-2 overflow-x-scroll

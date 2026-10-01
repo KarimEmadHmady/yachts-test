@@ -186,20 +186,23 @@ export default function DashboardPage() {
     <section className="min-h-screen bg-[#f7f7f7] p-4 text-black transition-colors dark:bg-[#012241] dark:text-white sm:p-6 lg:ml-64 md:ml-64 ml-0 mt-16">
       <div className="mx-auto max-w-7xl">
         <div className="mb-5">
-          <h1 className="text-xl font-bold">Overview</h1>
-          <p className="mt-0.5 text-xs text-black/50 dark:text-white/50">A quick summary of your platform</p>
+          <h1 data-reveal="up" data-reveal-delay="50" className="text-xl font-bold">Overview</h1>
+          <p data-reveal="up" data-reveal-delay="120" className="mt-0.5 text-xs text-black/50 dark:text-white/50">A quick summary of your platform</p>
         </div>
 
         {loading ? (
-          <div className="mb-5 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black/60 dark:border-white/10 dark:bg-[#12395c] dark:text-white/60">
+          <div data-reveal="fade" className="mb-5 rounded-xl border border-black/10 bg-white px-4 py-3 text-sm text-black/60 dark:border-white/10 dark:bg-[#12395c] dark:text-white/60">
             Loading dashboard analytics...
           </div>
         ) : null}
 
-        <div className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
+        <div data-reveal-stagger="50" className="mb-6 grid grid-cols-2 gap-3 sm:grid-cols-3 xl:grid-cols-5">
           {summaryCards.map((card) => (
             <div
               key={card.label}
+              data-reveal="up"
+              data-reveal-delay="150"
+              data-reveal-duration="700"
               className="rounded-xl border border-black/10 bg-white p-3.5 transition-colors dark:border-white/10 dark:bg-[#12395c]"
             >
               <p className="text-xs text-black/50 dark:text-white/50">{card.label}</p>
@@ -208,18 +211,18 @@ export default function DashboardPage() {
           ))}
         </div>
 
-        <div className="grid gap-4 xl:grid-cols-3">
-          <div className="rounded-xl border border-black/10 bg-white p-4 transition-colors dark:border-white/10 dark:bg-[#12395c]">
+        <div data-reveal-stagger="120" className="grid gap-4 xl:grid-cols-3">
+          <div data-reveal="up" data-reveal-delay="300" data-reveal-duration="900" className="rounded-xl border border-black/10 bg-white p-4 transition-colors dark:border-white/10 dark:bg-[#12395c]">
             <h2 className="mb-2 text-sm font-semibold">Yacht submissions</h2>
             <ApexChart options={yachtStatusChart.options} series={yachtStatusChart.series} type="donut" height={220} />
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-white p-4 transition-colors dark:border-white/10 dark:bg-[#12395c]">
+          <div data-reveal="up" data-reveal-delay="300" data-reveal-duration="900" className="rounded-xl border border-black/10 bg-white p-4 transition-colors dark:border-white/10 dark:bg-[#12395c]">
             <h2 className="mb-2 text-sm font-semibold">Enquiries, contact &amp; service</h2>
             <ApexChart options={leadsChart.options} series={leadsChart.series} type="donut" height={220} />
           </div>
 
-          <div className="rounded-xl border border-black/10 bg-white p-4 transition-colors dark:border-white/10 dark:bg-[#12395c]">
+          <div data-reveal="up" data-reveal-delay="300" data-reveal-duration="900" className="rounded-xl border border-black/10 bg-white p-4 transition-colors dark:border-white/10 dark:bg-[#12395c]">
             <h2 className="mb-2 text-sm font-semibold">Content overview</h2>
             <ApexChart options={inventoryChart.options} series={inventoryChart.series} type="bar" height={220} />
           </div>

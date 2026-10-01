@@ -44,7 +44,7 @@ export function YachtFilters({ filters, onChange, onReset }) {
   };
 
   return (
-    <div className="w-full">
+    <div data-reveal="up" className="w-full">
       {/* زرار الفلتر - يظهر بس في الشاشات الصغيرة */}
       <button
         type="button"

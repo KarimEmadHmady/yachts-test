@@ -3,9 +3,8 @@
 import { Maximize2, BedDouble, CalendarDays, Sparkles } from 'lucide-react';
 import { getYachtImageUrl } from '../utils/yacht.utils';
 import { YachtStatusBadge } from './YachtStatusBadge';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
-export function YachtCard({ yacht, onClick, index = 0 }) {
+export function YachtCard({ yacht, onClick }) {
   if (yacht.status !== 'published') {
     return null;
   }
@@ -14,12 +13,9 @@ export function YachtCard({ yacht, onClick, index = 0 }) {
   const amenities = (yacht.amenities || []).slice(0, 2);
 
   return (
-    <ScrollAnimate
-      as="article"
-      direction="up"
-      delay={(index % 4) * 90}
-      distance={30}
-      duration={800}
+    <article
+      data-reveal="up"
+      data-reveal-duration="800"
       onClick={onClick}
       className="group cursor-pointer overflow-hidden rounded-2xl border border-[#C9A868]/70 bg-[#f7f7f7]
                  transition-colors duration-200 hover:border-[#C9A868]
@@ -90,6 +86,6 @@ export function YachtCard({ yacht, onClick, index = 0 }) {
           </div>
         )} */}
       </div>
-    </ScrollAnimate>
+    </article>
   );
 }

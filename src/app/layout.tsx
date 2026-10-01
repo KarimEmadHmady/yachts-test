@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Cinzel } from "next/font/google";
 import "./globals.css";
 import ScrollToTop from "@/components/common/to-top/Scrolltotop";
+import ScrollReveal from "@/components/animations/ScrollReveal";
 
 const cinzel = Cinzel({
   variable: "--font-cinzel",
@@ -42,6 +43,7 @@ export default function RootLayout({
       <body>
         {children}
         <ScrollToTop />
+        <ScrollReveal />
       </body>
     </html>
   );

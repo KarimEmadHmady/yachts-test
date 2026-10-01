@@ -38,18 +38,20 @@ export function RelatedBlogs({ blog }) {
   if (!relatedBlogs.length) return null;
 
   return (
-    <aside className="w-full rounded-3xl bg-[#f7f7f7] p-4 shadow-lg dark:bg-white/[0.03] sm:p-5">
+    <aside data-reveal="up" data-reveal-delay="150" className="w-full rounded-3xl bg-[#f7f7f7] p-4 shadow-lg dark:bg-white/[0.03] sm:p-5">
       <h2 className="mb-4 text-sm font-bold uppercase tracking-[0.2em] text-[#C9A868]">
         Related Blogs
       </h2>
 
-      <div className="flex flex-col gap-4">
+      <div data-reveal-stagger="120" className="flex flex-col gap-4">
         {relatedBlogs.map((item) => {
           const thumbnail = getThumbnail(item);
           return (
             <button
               key={item.id}
               type="button"
+              data-reveal="up"
+              data-reveal-duration="800"
               onClick={() => router.push(`/blogs/${item.id}`)}
               className="group relative block h-44 w-full overflow-hidden rounded-3xl bg-black/20 text-left ring-1 ring-white/10 transition-transform duration-300 hover:scale-[1.01] sm:h-52"
             >

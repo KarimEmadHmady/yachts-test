@@ -3,7 +3,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import type { Yacht } from '../types/Yacht.types';
 import { getYachtImageUrl, groupSpecifications } from '../utils/yacht.utils';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 interface YachtSpecificationsSectionProps {
   yacht: Yacht;
@@ -13,7 +12,7 @@ interface YachtSpecificationsSectionProps {
 
 function SpecRow({ label, value }: { label: string; value: string }) {
   return (
-    <div className="flex items-center justify-between border-b border-black/10 py-3 text-sm dark:border-white/10">
+    <div data-reveal="up" data-reveal-duration="600" className="flex items-center justify-between border-b border-black/10 py-3 text-sm dark:border-white/10">
       <span className="uppercase tracking-wide text-black/60 dark:text-white/60">
         {label}
       </span>
@@ -30,7 +29,7 @@ function InteriorPhotosGrid({ images }: { images: string[] }) {
   }
 
   return (
-    <div className="flex flex-col gap-3">
+    <div data-reveal-stagger="90" className="flex flex-col gap-3">
       {rows.map((row, rowIndex) => {
         // alternate which item is wide, like the reference layout
         const wideFirst = rowIndex % 2 === 0;
@@ -45,14 +44,16 @@ function InteriorPhotosGrid({ images }: { images: string[] }) {
               return (
                 <div
                   key={`${image}-${colIndex}`}
-                  className={`overflow-hidden rounded-xl bg-black/5 dark:bg-white/5 aspect-[4/3] ${
+                  data-reveal="scale"
+                  data-reveal-duration="700"
+                  className={`group overflow-hidden rounded-xl bg-black/5 dark:bg-white/5 aspect-[4/3] ${
                     isWide ? 'flex-[1.6]' : 'flex-[1]'
                   }`}
                 >
                   <img
                     src={getYachtImageUrl(image)}
                     alt={`Interior ${rowIndex * 2 + colIndex + 1}`}
-                    className="h-full w-full object-cover"
+                    className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
               );
@@ -79,13 +80,13 @@ export function YachtSpecificationsSection({
     <section className="bg-[#f7f7f7] px-6 py-8 text-black dark:bg-[#0E2D4A] dark:text-white md:px-12 md:py-10 overflow-hidden">
       <div className="mx-auto grid max-w-7xl grid-cols-1 gap-8 lg:grid-cols-[1.7fr_1fr]">
         {/* Specs & Characteristics */}
-        <ScrollAnimate direction="up" delay={100} duration={850} className="space-y-10">
+        <div className="space-y-10">
           {specification.length > 0 && (
             <div>
-              <h2 className="mb-2 text-lg font-bold uppercase tracking-wide text-[#C9A868]">
+              <h2 data-reveal="up" data-reveal-delay="100" className="mb-2 text-lg font-bold uppercase tracking-wide text-[#C9A868]">
                 Specifications
               </h2>
-              <div>
+              <div data-reveal-stagger="60">
                 {specification.map((spec) => (
                   <SpecRow key={spec.id} label={spec.label} value={spec.value} />
                 ))}
@@ -95,10 +96,10 @@ export function YachtSpecificationsSection({
 
           {characteristic.length > 0 && (
             <div>
-              <h2 className="mb-2 text-lg font-bold uppercase tracking-wide text-[#C9A868]">
+              <h2 data-reveal="up" data-reveal-delay="100" className="mb-2 text-lg font-bold uppercase tracking-wide text-[#C9A868]">
                 Characteristics
               </h2>
-              <div>
+              <div data-reveal-stagger="60">
                 {characteristic.map((spec) => (
                   <SpecRow key={spec.id} label={spec.label} value={spec.value} />
                 ))}
@@ -110,6 +111,7 @@ export function YachtSpecificationsSection({
             <button
               type="button"
               onClick={onEnquire}
+              data-reveal="up"
               className="inline-flex items-center gap-2 rounded-full border border-[#C9A868]
                          px-6 py-2.5 text-sm font-semibold uppercase tracking-wide text-[#C9A868]
                          transition-colors hover:bg-[#C9A868] hover:text-[#0E2D4A]"
@@ -118,21 +120,21 @@ export function YachtSpecificationsSection({
               <ArrowUpRight className="h-4 w-4" strokeWidth={2} />
             </button>
           )}
-        </ScrollAnimate>
+        </div>
 
         {/* Interior photos */}
         {interiorImages.length > 0 && (
-          <ScrollAnimate
-            direction="up"
-            delay={220}
-            duration={850}
+          <div
+            data-reveal="up"
+            data-reveal-delay="220"
+            data-reveal-duration="850"
             className="rounded-2xl border border-black/10 bg-white/40 p-5 dark:border-white/10 dark:bg-white/[0.03] h-fit"
           >
-            <h3 className="mb-4 text-xs font-bold uppercase tracking-wide text-[#C9A868]">
+            <h3 data-reveal="up" className="mb-4 text-xs font-bold uppercase tracking-wide text-[#C9A868]">
               Interior Photos
             </h3>
             <InteriorPhotosGrid images={interiorImages} />
-          </ScrollAnimate>
+          </div>
         )}
       </div>
     </section>

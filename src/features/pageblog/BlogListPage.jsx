@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation';
 import { BlogCard } from './components/BlogCard';
 import { useBlogs } from './hooks/useBlogs';
-import { ScrollAnimate } from '@/components/common/ScrollAnimate';
 
 export default function BlogListPage() {
   const router = useRouter();
@@ -13,17 +12,11 @@ export default function BlogListPage() {
     <main className="min-h-screen bg-[#f7f7f7] px-6 py-10 text-black dark:bg-[#012241] dark:text-white md:px-12 md:py-14">
       <div className="mx-auto max-w-7xl">
         <header className="mb-8">
-          <ScrollAnimate direction="up" delay={50} distance={20}>
-            <p className="mb-3 text-xs font-bold uppercase tracking-[0.25em] text-[#C9A868]">Blogs</p>
-          </ScrollAnimate>
-          <ScrollAnimate direction="up" delay={140} distance={25}>
-            <h1 className="text-2xl font-bold uppercase tracking-wide md:text-4xl">Articles &amp; News</h1>
-          </ScrollAnimate>
-          <ScrollAnimate direction="up" delay={220} distance={20}>
-            <p className="mt-3 max-w-xl text-sm leading-relaxed text-black/55 dark:text-white/60">
-              Stories, ideas, and inspiration from the world of yachting.
-            </p>
-          </ScrollAnimate>
+          <p data-reveal="up" data-reveal-delay="50" className="mb-3 text-xs font-bold uppercase tracking-[0.25em] text-[#C9A868]">Blogs</p>
+          <h1 data-reveal="up" data-reveal-delay="140" className="text-2xl font-bold uppercase tracking-wide md:text-4xl">Articles &amp; News</h1>
+          <p data-reveal="up" data-reveal-delay="220" className="mt-3 max-w-xl text-sm leading-relaxed text-black/55 dark:text-white/60">
+            Stories, ideas, and inspiration from the world of yachting.
+          </p>
         </header>
 
         {isLoading && (
@@ -47,12 +40,11 @@ export default function BlogListPage() {
         )}
 
         {!isLoading && !error && blogs.length > 0 && (
-          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {blogs.map((blog, index) => (
+          <div data-reveal-stagger="160" className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {blogs.map((blog) => (
               <BlogCard
                 key={blog.id}
                 blog={blog}
-                index={index}
                 onClick={() => router.push(`/blogs/${blog.id}`)}
               />
             ))}
